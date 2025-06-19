@@ -1,0 +1,262 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0077b6, #00c1d4, #00d27f);
+    color: #fff;
+    text-align: center;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffd166;
+}
+
+button {
+    padding: 10px;
+    background: #ff4d6d;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff2142;
+}
+
+.dashboard-content {
+    padding: 20px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0077b6, #00c1d4, #00d27f);
+    color: #fff;
+    text-align: center;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffd166;
+}
+
+button {
+    padding: 10px;
+    background: #ff4d6d;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff2142;
+}
+
+.dashboard-content {
+    padding: 20px;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+}
+
+aside {
+    background-color: #1f1f1f;
+    color: white;
+    width: 220px;
+    padding: 20px;
+}
+
+aside .profile-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+aside nav a,
+aside form button {
+    display: block;
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 10px 0;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+}
+
+aside nav a:hover,
+aside form button:hover {
+    color: #00ff99;
+}
+
+main {
+    flex: 1;
+    padding: 30px;
+    background: linear-gradient(135deg, #0077b6, #00c1d4, #00d27f);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar h1 {
+    margin: 0;
+}
+
+.btn-criar {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.projetos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.projeto-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 220px;
+    min-height: 200px; /* ou maior, se quiser */
+    border-radius: 8px;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.projeto-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #007bff;
+}
+
+.projeto-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* limita a 3 linhas */
+    -webkit-box-orient: vertical;
+}
+
+
+.projeto-card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transform: scale(1.03);
+}
+
+.projeto-card a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.projeto-card form {
+    display: inline;
+    margin-left: 10px;
+}
+
+.projeto-card button i {
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+
+.projeto-card {
+            position: relative;
+        }
+
+        .projeto-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+
+        .projeto-actions form {
+            display: inline;
+        }
+
+        .projeto-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #dc3545;
+            font-size: 1.1em;
+        }
+
+        .projeto-actions button:hover {
+            color: #a80000;
+        }

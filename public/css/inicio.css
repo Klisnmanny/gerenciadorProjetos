@@ -1,0 +1,126 @@
+/* Resetando estilos padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Fundo animado e chamativo */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e90ff, #00c1d4, #00d27f);
+}
+
+/* Container central */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Nome do sistema em destaque */
+.app-name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+/* Campos do formulário */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 15px;
+    background: #dfdcdc;
+    transition: 0.3s;
+}
+
+input:focus {
+    background: #e3e3e3;
+}
+
+/* Botão estilizado */
+button {
+    padding: 12px;
+    width: 80%; /* Define a largura menor do botão */
+    max-width: 250px; /* Limita a largura máxima */
+    background: #008080;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+    margin: auto;
+    display: block;
+}
+
+button:hover {
+    background: #006666;
+}
+
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #0077b6;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.register-link a:hover {
+    color: #004d7a;
+}
+
+/* Mensagem de erro */
+.error-message {
+    color: #d90429;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .login-container {
+        max-width: 90%;
+    }
+}
+
+/* Animação de Fade-In */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
