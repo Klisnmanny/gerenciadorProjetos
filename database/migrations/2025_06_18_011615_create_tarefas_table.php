@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->string('titulo', 255);
             $table->text('descricao')->nullable();
             $table->foreignId('responsavel_id')->nullable()->constrained('usuarios')->onDelete('set null');
-            //$table->date('data_termino');
             $table->date('data_termino')->nullable();
             $table->timestamp('data_inicio')->nullable();
             $table->enum('status', ['A Fazer', 'Realizando', 'Montagem', 'Realizado'])->default('A Fazer');

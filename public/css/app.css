@@ -1,0 +1,105 @@
+/* Reset e fonte base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, sans-serif;
+}
+body {
+    background: linear-gradient(135deg, #0077b6, #00c1d4, #00d27f);
+    color: #222;
+    min-height: 100vh;
+}
+/* Containers centrais */
+.centered-container, .auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.93);
+    border-radius: 12px;
+    box-shadow: 0 4px 22px rgba(0,0,0,0.06);
+    padding: 32px 26px;
+    text-align: center;
+}
+h1, h2, h3 {
+    color: #263159;
+    margin-bottom: 20px;
+    letter-spacing: .5px;
+}
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #263159;
+    text-align: left;
+}
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], textarea, select {
+    width: 100%;
+    border: 1px solid #cdd0d4;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    background: #fafdff;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: #6b8cff;
+    outline: none;
+}
+button, .btn {
+    background: linear-gradient(90deg, #6b8cff 0%, #4e66a3 100%);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    width: 100%;
+    transition: background .2s, box-shadow .2s;
+    box-shadow: 0 2px 8px rgba(107,140,255,0.08);
+}
+button:hover, .btn:hover {
+    background: linear-gradient(90deg, #4e66a3 0%, #6b8cff 100%);
+}
+a {
+    color: #0077b6;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .2s;
+}
+a:hover {
+    color: #263159;
+}
+.error-message {
+    color: #d90429;
+    background: #fde6e7;
+    border: 1px solid #f7b7b7;
+    border-radius: 7px;
+    padding: 10px;
+    margin-bottom: 14px;
+    font-size: 1rem;
+    text-align: left;
+}
+.alert-success {
+    color: #155724;
+    background: #d4edda;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.link-secondary {
+    color: #555;
+    font-size: 14px;
+    margin-top: 16px;
+    display: block;
+}
+@media (max-width: 500px) {
+    .centered-container, .auth-container {
+        max-width: 93%;
+        padding: 18px 5vw;
+    }
+    h1 { font-size: 1.5rem; }
+}

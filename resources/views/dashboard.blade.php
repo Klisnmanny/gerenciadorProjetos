@@ -3,94 +3,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard - Gerenciador de Projetos</title>
+    <title>Dashboard - {{ $appName ?? 'Gerenciador de Projetos' }}</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- Opcional: dashboard.css para grid/carta específica -->
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        .projeto-card {
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 15px 20px;
-            width: 240px;
-            border-radius: 8px;
-            position: relative;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 150px; /* maior altura */
-        }
-        .projeto-card:hover {
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transform: scale(1.03);
-        }
-        .projeto-card a {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: none;
-            flex-grow: 1;
-        }
-        .projeto-card p {
-            margin-top: 40px;
-            color: #555;
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-height: 3.6em; /* até 3 linhas */
-            line-height: 1.2em;
-        }
-        .projeto-actions {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .projeto-actions button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #888;
-            font-size: 18px;
-            padding: 0 5px;
-        }
-        .projeto-actions button:hover {
-            color: #d33;
-        }
-    </style>
 </head>
 <body>
-    <aside>
-        <div class="profile-icon text-center">
+    <aside style="background:#1f1f1f; color:white; width:220px; min-height:100vh; float:left; display:flex; flex-direction:column; align-items:center; padding:20px 0;">
+        <div class="profile-icon" style="font-size:48px; margin-bottom:20px;">
             <i class="bi bi-person-circle"></i>
         </div>
+        <div style="font-weight:bold; margin-bottom:18px;">{{ $usuario->nome }}</div>
         <nav>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit">Sair</button>
+                <button type="submit" class="btn" style="width:160px;">Sair</button>
             </form>
         </nav>
     </aside>
 
-    <main>
-        <div class="top-bar">
-            <h1>Olá, {{ $usuario->nome }} 👋</h1>
-            <a href="{{ route('projetos.create') }}" class="btn-criar">+ Criar Projeto</a>
+    <main style="margin-left:220px; padding:40px 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+            <h1 style="margin:0;">Olá, {{ $usuario->nome }} 👋</h1>
+            <a href="{{ route('projetos.create') }}" class="btn" style="max-width:200px; text-align:center;">+ Criar Projeto</a>
         </div>
 
-        <div class="meus-projetos">
-            <h2 class="section-title">Seus Projetos</h2>
-            <div class="projetos-grid">
+        <section>
+            <h2 style="margin-bottom:16px;">Seus Projetos</h2>
+            <div class="projetos-grid" style="display:flex; flex-wrap:wrap; gap:18px;">
                 @forelse ($usuario->projetos as $projeto)
-                    <div class="projeto-card">
-                        <a href="{{ route('projetos.show', $projeto->id) }}">
-                            <h3>{{ $projeto->nome }}</h3>
-                            <p>{{ $projeto->descricao }}</p>
-                        </a>
-
-                        <div class="projeto-actions">
-                            <form method="POST" action="{{ route('projetos.destroy', $projeto->id) }}" onsubmit="return confirm('Tem certeza que deseja excluir este projeto?');">
+                    <div class="projeto-card" style="background:white; border:1px solid #ccc; border-radius:8px; width:240px; padding:18px 12px; position:relative; display:flex; flex-direction:column; justify-content:space-between; min-height:160px;">
+                        <a href="{{ route('projetos.show', $projeto->id) }}" style="color:#007bff; font-weight:bold; font-size:18px; text-decoration:none;">{{ $projeto->nome }}</a>
+                        <p style="color:#555; font-size:14px; margin:8px 0 0 0; flex:1; overflow:hidden; text-overflow:ellipsis;">{{ $projeto->descricao }}</p>
+                        <div class="projeto-actions" style="position:absolute; top:12px; right:12px;">
+                            <form method="POST" action="{{ route('projetos.destroy', $projeto->id) }}" onsubmit="return confirm('Tem certeza que deseja excluir este projeto?');" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" title="Excluir Projeto">
+                                <button type="submit" title="Excluir Projeto" style="background:none; border:none; color:#d33; font-size:20px; cursor:pointer;">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -100,22 +50,19 @@
                     <p>Você ainda não criou nenhum projeto.</p>
                 @endforelse
             </div>
-        </div>
+        </section>
 
-        <div class="projetos-associados">
-            <h2 class="section-title">Projetos Associados</h2>
-            <div class="projetos-grid">
+        <section style="margin-top:38px;">
+            <h2 style="margin-bottom:16px;">Projetos Associados</h2>
+            <div class="projetos-grid" style="display:flex; flex-wrap:wrap; gap:18px;">
                 @forelse ($usuario->projetosParticipando as $projeto)
-                    <div class="projeto-card">
-                        <a href="{{ route('projetos.show', $projeto->id) }}">
-                            <h3>{{ $projeto->nome }}</h3>
-                            <p>{{ $projeto->descricao }}</p>
-                        </a>
-
-                        <div class="projeto-actions">
-                            <form method="POST" action="{{ route('projetos.sair', $projeto->id) }}" onsubmit="return confirm('Deseja sair deste projeto?');">
+                    <div class="projeto-card" style="background:white; border:1px solid #ccc; border-radius:8px; width:240px; padding:18px 12px; position:relative; display:flex; flex-direction:column; justify-content:space-between; min-height:160px;">
+                        <a href="{{ route('projetos.show', $projeto->id) }}" style="color:#007bff; font-weight:bold; font-size:18px; text-decoration:none;">{{ $projeto->nome }}</a>
+                        <p style="color:#555; font-size:14px; margin:8px 0 0 0; flex:1; overflow:hidden; text-overflow:ellipsis;">{{ $projeto->descricao }}</p>
+                        <div class="projeto-actions" style="position:absolute; top:12px; right:12px;">
+                            <form method="POST" action="{{ route('projetos.sair', $projeto->id) }}" onsubmit="return confirm('Deseja sair deste projeto?');" style="display:inline;">
                                 @csrf
-                                <button type="submit" title="Sair do Projeto">
+                                <button type="submit" title="Sair do Projeto" style="background:none; border:none; color:#007bff; font-size:20px; cursor:pointer;">
                                     <i class="bi bi-box-arrow-right"></i>
                                 </button>
                             </form>
@@ -125,7 +72,7 @@
                     <p>Você não participa de nenhum projeto ainda.</p>
                 @endforelse
             </div>
-        </div>
+        </section>
     </main>
 </body>
 </html>
