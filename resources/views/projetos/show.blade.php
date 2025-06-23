@@ -24,6 +24,10 @@
         <div class="alert-success">{{ session('sucesso') }}</div>
     @endif
 
+    @if(session('erro'))
+        <div class="alert-danger">{{ session('erro') }}</div>
+    @endif
+
     @if($errors->any())
         <div class="error-message">
             <ul>
@@ -34,130 +38,137 @@
         </div>
     @endif
 
-    <div class="kanban-board">
-        <!-- Montagem -->
-        <div class="kanban-column">
-            <div class="kanban-column-header">
-                <h2>Montagem</h2>
+<div class="kanban-board">
+    <!-- MONTAGEM -->
+    <div class="kanban-column">
+        <div class="kanban-column-header">
+            <h2>Montagem</h2>
+            @if(auth()->id() === $projeto->criador_id)
                 <button class="btn-criar-tarefa" id="abrirModalCriar">+ Criar Tarefa</button>
-            </div>
-            @foreach ($projeto->tarefas->where('status', 'Montagem') as $tarefa)
-                <div class="kanban-card">
-                    <div class="kanban-card-header">
-                        <h4>{{ $tarefa->titulo }}</h4>
-                        @if ($tarefa->data_termino)
-                        <span class="kanban-deadline" title="Prazo">
+            @endif
+        </div>
+        @foreach ($projeto->tarefas->where('status', 'Montagem') as $tarefa)
+            <div class="kanban-card">
+                <div class="kanban-card-header">
+                    <h4>
+                        <a href="{{ route('tarefas.show', $tarefa->id) }}">{{ $tarefa->titulo }}</a>
+                    </h4>
+                    @if ($tarefa->data_termino)
+                        <span class="kanban-deadline">
                             <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') }}
                         </span>
-                        @endif
-                    </div>
-                    <div class="kanban-card-body">
-                        <p>{{ $tarefa->descricao }}</p>
-                        <div class="kanban-meta">
-                            <i class="bi bi-person"></i>
-                            <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
-                        </div>
-                    </div>
-                    <div class="kanban-actions">
-                        @if (auth()->id() === $tarefa->responsavel_id)
-                        <form method="POST" action="{{ route('tarefas.aceitar', $tarefa->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-aceitar">Aceitar</button>
-                        </form>
-                        @endif
-                        @if (auth()->id() === $tarefa->criador_id)
-                        <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-excluir">Excluir</button>
-                        </form>
-                        @endif
+                    @endif
+                </div>
+                <div class="kanban-card-body">
+                    <p>{{ $tarefa->descricao }}</p>
+                    <div class="kanban-meta">
+                        <i class="bi bi-person"></i>
+                        <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
                     </div>
                 </div>
-            @endforeach
-        </div>
-        <!-- Realizando -->
-        <div class="kanban-column">
-            <div class="kanban-column-header">
-                <h2>Realizando</h2>
+                <div class="kanban-actions">
+                    @if (auth()->id() === $tarefa->responsavel_id)
+                    <form method="POST" action="{{ route('tarefas.aceitar', $tarefa->id) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-aceitar">Aceitar</button>
+                    </form>
+                    @endif
+                    @if (auth()->id() === $tarefa->criador_id)
+                    <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-excluir">Excluir</button>
+                    </form>
+                    @endif
+                </div>
             </div>
-            @foreach ($projeto->tarefas->where('status', 'Realizando') as $tarefa)
-                <div class="kanban-card">
-                    <div class="kanban-card-header">
-                        <h4>{{ $tarefa->titulo }}</h4>
-                        @if ($tarefa->data_termino)
-                        <span class="kanban-deadline" title="Prazo">
-                            <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') }}
-                        </span>
-                        @endif
-                    </div>
-                    <div class="kanban-card-body">
-                        <p>{{ $tarefa->descricao }}</p>
-                        <div class="kanban-meta">
-                            <i class="bi bi-person"></i>
-                            <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
-                        </div>
-                    </div>
-                    <div class="kanban-actions">
-                        @if (auth()->id() === $tarefa->responsavel_id)
-                        <form method="POST" action="{{ route('tarefas.aceitar', $tarefa->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-aceitar">Aceitar</button>
-                        </form>
-                        @endif
-                        @if (auth()->id() === $tarefa->criador_id)
-                        <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-excluir">Excluir</button>
-                        </form>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        <!-- Realizado -->
-        <div class="kanban-column">
-            <div class="kanban-column-header">
-                <h2>Realizado</h2>
-            </div>
-            @foreach ($projeto->tarefas->where('status', 'Realizado') as $tarefa)
-                <div class="kanban-card">
-                    <div class="kanban-card-header">
-                        <h4>{{ $tarefa->titulo }}</h4>
-                        @if ($tarefa->data_termino)
-                        <span class="kanban-deadline" title="Prazo">
-                            <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') }}
-                        </span>
-                        @endif
-                    </div>
-                    <div class="kanban-card-body">
-                        <p>{{ $tarefa->descricao }}</p>
-                        <div class="kanban-meta">
-                            <i class="bi bi-person"></i>
-                            <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
-                        </div>
-                    </div>
-                    <div class="kanban-actions">
-                        @if (auth()->id() === $tarefa->responsavel_id)
-                        <form method="POST" action="{{ route('tarefas.aceitar', $tarefa->id) }}">
-                            @csrf
-                            <button type="submit" class="btn btn-aceitar">Aceitar</button>
-                        </form>
-                        @endif
-                        @if (auth()->id() === $tarefa->criador_id)
-                        <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-excluir">Excluir</button>
-                        </form>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
+        @endforeach
     </div>
-</main>
+    <!-- REALIZANDO -->
+    <div class="kanban-column">
+        <div class="kanban-column-header">
+            <h2>Realizando</h2>
+        </div>
+        @foreach ($projeto->tarefas->where('status', 'Realizando') as $tarefa)
+            <div class="kanban-card">
+                <div class="kanban-card-header">
+                    <h4>
+                        <a href="{{ route('tarefas.show', $tarefa->id) }}">{{ $tarefa->titulo }}</a>
+                    </h4>
+                    @if ($tarefa->data_termino)
+                        <span class="kanban-deadline">
+                            <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') }}
+                        </span>
+                    @endif
+                </div>
+                <div class="kanban-card-body">
+                    <p>{{ $tarefa->descricao }}</p>
+                    <div class="kanban-meta">
+                        <i class="bi bi-person"></i>
+                        <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
+                    </div>
+                    @if($tarefa->data_inicio)
+                        <div class="kanban-data-inicio">
+                            <i class="bi bi-play-circle"></i>
+                            Iniciada em {{ \Carbon\Carbon::parse($tarefa->data_inicio)->format('d/m/Y H:i') }}
+                        </div>
+                    @endif
+                </div>
+                <div class="kanban-actions">
+                    @if (auth()->id() === $tarefa->responsavel_id)
+                    <form method="POST" action="{{ route('tarefas.feito', $tarefa->id) }}" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Feito</button>
+                    </form>
+                    @endif
+                    @if (auth()->id() === $tarefa->criador_id)
+                    <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-excluir">Excluir</button>
+                    </form>
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
+    <!-- REALIZADO -->
+    <div class="kanban-column">
+        <div class="kanban-column-header">
+            <h2>Realizado</h2>
+        </div>
+        @foreach ($projeto->tarefas->where('status', 'Realizado') as $tarefa)
+            <div class="kanban-card">
+                <div class="kanban-card-header">
+                    <h4>
+                        <a href="{{ route('tarefas.show', $tarefa->id) }}">{{ $tarefa->titulo }}</a>
+                    </h4>
+                    @if ($tarefa->data_termino)
+                        <span class="kanban-deadline">
+                            <i class="bi bi-calendar"></i> {{ \Carbon\Carbon::parse($tarefa->data_termino)->format('d/m/Y') }}
+                        </span>
+                    @endif
+                </div>
+                <div class="kanban-card-body">
+                    <p>{{ $tarefa->descricao }}</p>
+                    <div class="kanban-meta">
+                        <i class="bi bi-person"></i>
+                        <strong>Responsável:</strong> {{ $tarefa->responsavel->nome ?? '-' }}
+                    </div>
+                </div>
+                <div class="kanban-actions">
+                    @if (auth()->id() === $tarefa->criador_id)
+                    <form method="POST" action="{{ route('tarefas.destroy', $tarefa->id) }}" onsubmit="return confirm('Confirma exclusão?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-excluir">Excluir</button>
+                    </form>
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
 
 <!-- Modal Criar Tarefa -->
 <div class="modal" id="modalCriarTarefa">
@@ -183,12 +194,8 @@
             <label for="data_termino">Data de Término (opcional):</label>
             <input type="date" name="data_termino" id="data_termino" value="{{ old('data_termino') }}">
 
-            <label for="status">Status:</label>
-            <select name="status" id="status" required>
-                <option value="Montagem" {{ old('status')=='Montagem' ? 'selected' : '' }}>Montagem</option>
-                <option value="Realizando" {{ old('status')=='Realizando' ? 'selected' : '' }}>Realizando</option>
-                <option value="Realizado" {{ old('status')=='Realizado' ? 'selected' : '' }}>Realizado</option>
-            </select>
+            <!-- Remova o campo de status do formulário, sempre cria como "Montagem" -->
+            <input type="hidden" name="status" value="Montagem">
 
             <button type="submit" class="btn">Criar Tarefa</button>
         </form>
@@ -200,9 +207,11 @@
     const btnAbrir = document.getElementById('abrirModalCriar');
     const btnFechar = document.getElementById('fecharModal');
 
-    btnAbrir.addEventListener('click', () => {
-        modal.classList.add('active');
-    });
+    if(btnAbrir) {
+        btnAbrir.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+    }
 
     btnFechar.addEventListener('click', () => {
         modal.classList.remove('active');

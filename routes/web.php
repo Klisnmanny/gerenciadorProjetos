@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TarefaController;
+use App\Http\Controllers\ChecklistController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +58,18 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tarefas/{tarefa}', [TarefaController::class, 'destroy'])->name('tarefas.destroy');
     Route::post('/projetos/{id}/tarefas', [TarefaController::class, 'store'])->name('tarefas.store');
 
+
+    Route::get('/tarefas/{id}', [TarefaController::class, 'show'])->name('tarefas.show');
+
+    Route::post('/tarefas/{tarefa}/checklists', [ChecklistController::class, 'store'])->name('checklists.store');
+    Route::patch('/checklists/{id}', [ChecklistController::class, 'update'])->name('checklists.update');
+    
+    Route::delete('/checklists/{id}', [ChecklistController::class, 'destroy'])->name('checklists.destroy');
+
+    Route::post('/tarefas/{tarefa}/feito', [TarefaController::class, 'marcarComoFeita'])->name('tarefas.feito');
+
 });
+
+
+
 

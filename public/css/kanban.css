@@ -121,6 +121,11 @@ main {
     color: white;
     padding: 10px;
 }
+.btn-success {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+}
 .modal {
     display: none;
     position: fixed;
